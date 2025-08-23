@@ -57,7 +57,7 @@ public class QuestionsController : ControllerBase
         return Ok("Solution selected");
     }
 
-    [HttpGet("{questionId:guid}/answers")]
+    [HttpPost("{questionId:guid}/answers")]
     public async Task<IActionResult> AddAnswersAsync(
         [FromRoute] Guid questionId,
         [FromBody] AddAnswerRequest request,
