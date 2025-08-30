@@ -8,11 +8,11 @@ namespace DevQuestions.Presenters.Questions;
 [Route("[controller]")]
 public class QuestionsController : ControllerBase
 {
-    private readonly IQuestionService _questionService;
+    private readonly IQuestionsService _questionsService;
 
-    public QuestionsController(IQuestionService questionService)
+    public QuestionsController(IQuestionsService questionsService)
     {
-        _questionService = questionService;
+        _questionsService = questionsService;
     }
 
     [HttpPost]
@@ -20,7 +20,7 @@ public class QuestionsController : ControllerBase
         [FromBody] CreateQuestionRequest request,
         CancellationToken cancellationToken = default)
     {
-        var questionId = await _questionService.CreateAsync(request, cancellationToken);
+        var questionId = await _questionsService.CreateAsync(request, cancellationToken);
         return Ok(questionId);
     }
 

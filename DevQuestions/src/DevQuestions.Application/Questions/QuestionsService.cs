@@ -1,11 +1,14 @@
-﻿using DevQuestions.Contracts.Questions;
+﻿using DevQuestions.Application.Extensions;
+using DevQuestions.Application.Questions.Failures.Exceptions;
+using DevQuestions.Contracts.Questions;
 using DevQuestions.Domain.Questions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using Shared;
 
 namespace DevQuestions.Application.Questions;
 
-public class QuestionsService : IQuestionService
+public class QuestionsService : IQuestionsService
 {
     private readonly IQuestionsRepository _questionsRepository;
     private readonly ILogger<QuestionsService> _logger;
@@ -27,13 +30,19 @@ public class QuestionsService : IQuestionService
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
-            throw new ValidationException(validationResult.Errors);
+        {
+            throw new QuestionValidationException(validationResult.ToErrors());
+        }
 
         int openedUserQuestionCount = await _questionsRepository
             .GetOpenedUserQuestionsCountAsync(request.UserId, cancellationToken);
 
+        var existedQuestion = await _questionsRepository.GetByIdAsync(Guid.Empty, cancellationToken);
+
         if (openedUserQuestionCount > 3)
-            throw new Exception("User has too many opened questions.");
+        {
+            throw new TooManyQuestionsException();
+        }
 
         var questionId = Guid.NewGuid();
 
