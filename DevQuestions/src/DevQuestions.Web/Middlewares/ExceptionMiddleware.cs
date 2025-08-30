@@ -33,6 +33,7 @@ public class ExceptionMiddleware
 
         (int code, Error[]? errors) = exception switch
         {
+            BadRequestException
                 => (StatusCodes.Status400BadRequest, JsonSerializer.Deserialize<Error[]>(exception.Message)),
 
             NotFoundException

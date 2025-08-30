@@ -1,5 +1,6 @@
-﻿using DevQuestions.Application.Extensions;
-using DevQuestions.Application.Questions.Failures.Exceptions;
+﻿using CSharpFunctionalExtensions;
+using DevQuestions.Application.Extensions;
+using DevQuestions.Application.Questions.Failures;
 using DevQuestions.Contracts.Questions;
 using DevQuestions.Domain.Questions;
 using FluentValidation;
@@ -24,25 +25,25 @@ public class QuestionsService : IQuestionsService
         _validator = validator;
     }
 
-    public async Task<Guid> CreateAsync(
+    public async Task<Result<Guid, ErrorsList>> CreateAsync(
         CreateQuestionRequest request,
         CancellationToken cancellationToken = default)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
-        {
-            throw new QuestionValidationException(validationResult.ToErrors());
-        }
+            return validationResult.ToErrors();
+
+        var calculator = new QuestionCalculator();
+
+        var calculationResult = calculator.Calculate();
+        if (calculationResult.IsFailure)
+            return calculationResult.Error;
 
         int openedUserQuestionCount = await _questionsRepository
             .GetOpenedUserQuestionsCountAsync(request.UserId, cancellationToken);
 
-        var existedQuestion = await _questionsRepository.GetByIdAsync(Guid.Empty, cancellationToken);
-
         if (openedUserQuestionCount > 3)
-        {
-            throw new TooManyQuestionsException();
-        }
+            return Errors.Questions.TooManyQuestions().ToErrors();
 
         var questionId = Guid.NewGuid();
 
@@ -87,4 +88,12 @@ public class QuestionsService : IQuestionsService
     //     CancellationToken cancellationToken = default)
     // {
     // }
+}
+
+public class QuestionCalculator
+{
+    public Result<int, ErrorsList> Calculate()
+    {
+        return Error.Failure("", "").ToErrors();
+    }
 }
