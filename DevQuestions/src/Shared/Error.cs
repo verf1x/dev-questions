@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Shared;
 
@@ -32,6 +33,8 @@ public record Error
 
     public static Error Failure(string? code, string message)
         => new Error(code ?? "failure", message, ErrorType.Failure);
+
+    public ErrorsList ToErrors() => this;
 }
 
 public enum ErrorType
