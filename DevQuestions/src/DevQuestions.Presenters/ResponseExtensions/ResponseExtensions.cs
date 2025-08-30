@@ -32,6 +32,6 @@ public static class ResponseExtensions
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Failure => StatusCodes.Status500InternalServerError,
-            _ => 500
+            _ => StatusCodes.Status500InternalServerError
         };
 }
