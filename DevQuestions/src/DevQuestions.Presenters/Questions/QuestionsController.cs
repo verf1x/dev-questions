@@ -1,4 +1,6 @@
-using DevQuestions.Application.Questions;
+using DevQuestions.Application.Abstractions;
+using DevQuestions.Application.Questions.Features.AddAnswer;
+using DevQuestions.Application.Questions.Features.Create;
 using DevQuestions.Contracts.Questions;
 using DevQuestions.Presenters.ResponseExtensions;
 using Microsoft.AspNetCore.Mvc;
@@ -9,28 +11,21 @@ namespace DevQuestions.Presenters.Questions;
 [Route("[controller]")]
 public class QuestionsController : ControllerBase
 {
-    private readonly IQuestionsService _questionsService;
-
-    public QuestionsController(IQuestionsService questionsService)
-    {
-        _questionsService = questionsService;
-    }
-
     [HttpPost]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] CreateQuestionRequest request,
+        [FromBody] CreateQuestionDto dto,
+        [FromServices] ICommandHandler<CreateQuestionCommand, Guid> handler,
         CancellationToken cancellationToken = default)
     {
-        var result = await _questionsService.CreateAsync(request, cancellationToken);
-        if (result.IsFailure)
-            return result.Error.ToResponse();
+        var command = new CreateQuestionCommand(dto);
 
-        return Ok(result.Value);
+        var result = await handler.HandleAsync(command, cancellationToken);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAsync(
-        [FromQuery] GetQuestionsRequest request,
+        [FromQuery] GetQuestionsDto dto,
         CancellationToken cancellationToken = default)
     {
         return Ok("Question get");
@@ -47,7 +42,7 @@ public class QuestionsController : ControllerBase
     [HttpPut("{questionId:guid}")]
     public async Task<IActionResult> UpdateAsync(
         [FromRoute] Guid questionId,
-        [FromBody] UpdateQuestionRequest request,
+        [FromBody] UpdateQuestionDto dto,
         CancellationToken cancellationToken = default)
     {
         return Ok("Question updated");
@@ -71,11 +66,15 @@ public class QuestionsController : ControllerBase
     }
 
     [HttpPost("{questionId:guid}/answers")]
-    public async Task<IActionResult> AddAnswersAsync(
+    public async Task<IActionResult> AddAnswerAsync(
         [FromRoute] Guid questionId,
-        [FromBody] AddAnswerRequest request,
+        [FromBody] AddAnswerDto dto,
+        [FromServices] ICommandHandler<AddAnswerCommand, Guid> handler,
         CancellationToken cancellationToken = default)
     {
-        return Ok("Answer added");
+        var command = new AddAnswerCommand(questionId, dto);
+
+        var result = await handler.HandleAsync(command, cancellationToken);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 }

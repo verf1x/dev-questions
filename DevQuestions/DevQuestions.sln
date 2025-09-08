@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevQuestions.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{6EC40799-0C50-4B5F-B4AD-658C22F7923F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevQuestions.Infrastructure.Communication", "src\DevQuestions.Infrastructure.Communication\DevQuestions.Infrastructure.Communication.csproj", "{A0AC8C90-1E36-44ED-B274-77114C54701E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{6EC40799-0C50-4B5F-B4AD-658C22F7923F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EC40799-0C50-4B5F-B4AD-658C22F7923F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EC40799-0C50-4B5F-B4AD-658C22F7923F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0AC8C90-1E36-44ED-B274-77114C54701E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0AC8C90-1E36-44ED-B274-77114C54701E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0AC8C90-1E36-44ED-B274-77114C54701E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0AC8C90-1E36-44ED-B274-77114C54701E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4A38D7D8-EDE9-4991-87C0-FECF842B6B91} = {030A3A27-02E1-4D71-AD36-6E6603A406CD}
@@ -79,5 +85,6 @@ Global
 		{CAF52CB3-D829-47F3-A39E-95FD1A1DE3E6} = {030A3A27-02E1-4D71-AD36-6E6603A406CD}
 		{01A9721D-CA45-4C73-AB34-2970EF1EF509} = {030A3A27-02E1-4D71-AD36-6E6603A406CD}
 		{6EC40799-0C50-4B5F-B4AD-658C22F7923F} = {030A3A27-02E1-4D71-AD36-6E6603A406CD}
+		{A0AC8C90-1E36-44ED-B274-77114C54701E} = {030A3A27-02E1-4D71-AD36-6E6603A406CD}
 	EndGlobalSection
 EndGlobal
