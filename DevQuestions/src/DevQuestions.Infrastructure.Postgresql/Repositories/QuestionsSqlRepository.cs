@@ -1,7 +1,9 @@
-﻿using Dapper;
+﻿using CSharpFunctionalExtensions;
+using Dapper;
 using DevQuestions.Application.Database;
 using DevQuestions.Application.Questions;
 using DevQuestions.Domain.Questions;
+using Shared;
 
 namespace DevQuestions.Infrastructure.Postgresql.Repositories;
 
@@ -43,7 +45,7 @@ public class QuestionsSqlRepository : IQuestionsRepository
     public async Task<Guid> DeleteAsync(Guid questionId, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
-    public async Task<Question?> GetByIdAsync(Guid questionId, CancellationToken cancellationToken = default)
+    public async Task<Result<Question, ErrorsList>> GetByIdAsync(Guid questionId, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
     public async Task<int> GetOpenedUserQuestionsCountAsync(Guid userId, CancellationToken cancellationToken = default)
