@@ -52,11 +52,11 @@ public class AddAnswerHandler : ICommandHandler<AddAnswerCommand, Guid>
 
         var transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
 
-        (_, bool isFailure, Question? question, ErrorsList? error) =
-            await _questionsRepository.GetByIdAsync(command.QuestionId, cancellationToken);
-        if (isFailure)
-            return error;
+        var questionResult = await _questionsRepository.GetByIdAsync(command.QuestionId, cancellationToken);
+        if (questionResult.IsFailure)
+            return questionResult.Error;
 
+        var question = questionResult.Value;
         var answer = new Answer(Guid.NewGuid(), command.AddAnswerDto.UserId, command.AddAnswerDto.Text, command.QuestionId);
 
         question.Answers.Add(answer);
