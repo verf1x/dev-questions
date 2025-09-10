@@ -5,6 +5,8 @@ using DevQuestions.Application.Database;
 using DevQuestions.Application.Extensions;
 using DevQuestions.Application.Questions.Failures;
 using DevQuestions.Contracts.Questions;
+using DevQuestions.Contracts.Questions.Dtos;
+using DevQuestions.Contracts.Questions.Responses;
 using DevQuestions.Domain.Questions;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -34,9 +36,8 @@ public class AddAnswerHandler : ICommandHandler<AddAnswerCommand, Guid>
         _logger = logger;
     }
 
-    public async Task<Result<Guid, ErrorsList>> HandleAsync(
-        AddAnswerCommand command,
-        CancellationToken cancellationToken = default)
+    public async Task<Result<Guid, ErrorsList>> HandleAsync(AddAnswerCommand command,
+        CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command.AddAnswerDto, cancellationToken);
         if (!validationResult.IsValid)

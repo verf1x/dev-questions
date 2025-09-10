@@ -10,7 +10,7 @@ public interface ICommandHandler<in TCommand, TResponse>
 {
     Task<Result<TResponse, ErrorsList>> HandleAsync(
         TCommand command,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken);
 }
 
 public interface ICommandHandler<in TCommand>

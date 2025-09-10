@@ -1,6 +1,6 @@
-﻿using DevQuestions.Infrastructure.Postgresql.Seeders;
+﻿using DevQuestions.Infrastructure.Postgresql;
 
-namespace DevQuestions.Infrastructure.Postgresql;
+namespace DevQuestions.Web.Seeders;
 
 public static class SeederExtensions
 {

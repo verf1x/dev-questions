@@ -1,7 +1,10 @@
 using DevQuestions.Application.Abstractions;
 using DevQuestions.Application.Questions.Features.AddAnswer;
 using DevQuestions.Application.Questions.Features.Create;
+using DevQuestions.Application.Questions.Features.GetQuestionsWithFilters;
 using DevQuestions.Contracts.Questions;
+using DevQuestions.Contracts.Questions.Dtos;
+using DevQuestions.Contracts.Questions.Responses;
 using DevQuestions.Presenters.ResponseExtensions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,10 +28,14 @@ public class QuestionsController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetAsync(
-        [FromQuery] GetQuestionsDto dto,
+        [FromServices] IQueryHandler<GetQuestionsWithFiltersQuery, QuestionResponse> handler,
+        [FromQuery] GetQuestionsDto request,
         CancellationToken cancellationToken = default)
     {
-        return Ok("Question get");
+        var query = new GetQuestionsWithFiltersQuery(request);
+
+        var result = await handler.HandleAsync(query, cancellationToken);
+        return Ok(result);
     }
 
     [HttpGet("{questionId:guid}")]

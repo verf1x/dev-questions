@@ -1,4 +1,4 @@
-﻿namespace DevQuestions.Infrastructure.Postgresql.Seeders;
+﻿namespace DevQuestions.Infrastructure.Postgresql;
 
 public interface ISeeder
 {

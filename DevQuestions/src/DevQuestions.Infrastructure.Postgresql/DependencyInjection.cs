@@ -1,6 +1,6 @@
 ﻿using DevQuestions.Application.Database;
 using DevQuestions.Application.Questions;
-using DevQuestions.Infrastructure.Postgresql.Repositories;
+using DevQuestions.Infrastructure.Postgresql.Questions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DevQuestions.Infrastructure.Postgresql;
@@ -13,7 +13,7 @@ public static class DependencyInjection
 
         services.AddScoped<IQuestionsRepository, QuestionsSqlRepository>();
 
-        services.AddDbContext<QuestionsDbContext>();
+        services.AddDbContext<QuestionsReadDbContext>();
 
         return services;
     }
