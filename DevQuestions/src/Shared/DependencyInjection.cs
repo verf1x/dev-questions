@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Abstractions;
 
-namespace DevQuestions.Application;
+namespace Shared;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddSharedDependencies(this IServiceCollection services)
     {
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 

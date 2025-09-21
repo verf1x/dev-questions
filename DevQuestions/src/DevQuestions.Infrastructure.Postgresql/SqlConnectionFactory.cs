@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using DevQuestions.Application.Database;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using Shared.Database;
 
 namespace DevQuestions.Infrastructure.Postgresql;
 

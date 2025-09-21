@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Abstractions;
 
-namespace DevQuestions.Application;
+namespace Questions.Application;
 
 public static class DependencyInjection
 {

@@ -1,7 +1,7 @@
-﻿using DevQuestions.Application.Database;
-using DevQuestions.Application.Questions;
+﻿using DevQuestions.Application.Questions;
 using DevQuestions.Infrastructure.Postgresql.Questions;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Database;
 
 namespace DevQuestions.Infrastructure.Postgresql;
 

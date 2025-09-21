@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using DevQuestions.Application.FullTextSearch;
 using DevQuestions.Domain.Questions;
 using Shared;
+using Shared.FullTextSearch;
 
 namespace DevQuestions.Infrastructure.ElasticSearch;
 

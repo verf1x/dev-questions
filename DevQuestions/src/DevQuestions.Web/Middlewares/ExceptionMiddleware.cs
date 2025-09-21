@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using DevQuestions.Application.Exceptions;
 using Shared;
+using Shared.Exceptions;
 
 namespace DevQuestions.Web.Middlewares;
 

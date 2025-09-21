@@ -1,4 +1,4 @@
-﻿using DevQuestions.Application.FilesStorage;
+﻿using Shared.FilesStorage;
 
 namespace DevQuestions.Infrastructure.S3;
 
