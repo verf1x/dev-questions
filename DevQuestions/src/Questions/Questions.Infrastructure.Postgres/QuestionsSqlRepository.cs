@@ -1,4 +1,12 @@
-﻿namespace Questions.Infrastructure.Postgres;
+﻿using CSharpFunctionalExtensions;
+using Dapper;
+using Questions.Application;
+using Questions.Application.Features.GetQuestionsWithFilters;
+using Questions.Domain;
+using Shared;
+using Shared.Database;
+
+namespace Questions.Infrastructure.Postgres;
 
 public class QuestionsSqlRepository : IQuestionsRepository
 {
@@ -11,10 +19,10 @@ public class QuestionsSqlRepository : IQuestionsRepository
 
     public async Task<Guid> AddAsync(Question question, CancellationToken cancellationToken = default)
     {
-        const string sql = """
-                           INSERT INTO questions (id, title, text, user_id, attachment_id, tags, status)
-                           VALUES (@Id, @Title, @Text, @UserId, @AttachmentId, @Tags, @Status)
-                           """;
+        const string sql = $"""
+                            INSERT INTO questions (id, title, text, user_id, attachment_id, tags, status)
+                            VALUES (@Id, @Title, @Text, @UserId, @AttachmentId, @Tags, @Status)
+                            """;
 
         using var connection = _sqlConnectionFactory.Create();
 
@@ -38,10 +46,12 @@ public class QuestionsSqlRepository : IQuestionsRepository
     public async Task<Guid> DeleteAsync(Guid questionId, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
-    public async Task<Result<Question, ErrorsList>> GetByIdAsync(Guid questionId, CancellationToken cancellationToken = default)
+    public async Task<Result<Question, ErrorsList>> GetByIdAsync(Guid questionId,
+        CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
-    public Task<(IReadOnlyList<Question> questions, long count)> GetWithFiltersAsync(GetQuestionsWithFiltersQuery query, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public Task<(IReadOnlyList<Question> questions, long count)> GetWithFiltersAsync(GetQuestionsWithFiltersQuery query,
+        CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
     public async Task<int> GetOpenedUserQuestionsCountAsync(Guid userId, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
