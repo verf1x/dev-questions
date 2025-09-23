@@ -1,4 +1,12 @@
-﻿namespace Questions.Infrastructure.Postgres;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
+using Questions.Application;
+using Questions.Application.Failures;
+using Questions.Application.Features.GetQuestionsWithFilters;
+using Questions.Domain;
+using Shared;
+
+namespace Questions.Infrastructure.Postgres;
 
 public class QuestionsEfCoreRepository : IQuestionsRepository
 {

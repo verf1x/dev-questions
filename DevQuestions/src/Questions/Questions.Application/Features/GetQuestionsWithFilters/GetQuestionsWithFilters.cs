@@ -1,25 +1,27 @@
-﻿using DevQuestions.Contracts.Questions.Dtos;
-using DevQuestions.Contracts.Questions.Responses;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Questions.Contracts.Dtos;
+using Questions.Contracts.Responses;
 using Questions.Domain;
 using Shared.Abstractions;
 using Shared.FilesStorage;
+using Tags.Contracts;
+using Tags.Contracts.Dtos;
 
 namespace Questions.Application.Features.GetQuestionsWithFilters;
 
 public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuery, QuestionResponse>
 {
     private readonly IFilesProvider _filesProvider;
-    //private readonly ITagsReadDbContext _tagsReadDbContext;
+    private readonly ITagsContract _tagsContract;
     private readonly IQuestionsReadDbContext _questionsReadDbContext;
 
     public GetQuestionsWithFilters(
         IFilesProvider filesProvider,
-        //ITagsReadDbContext tagsReadDbContext,
+        ITagsContract tagsContract,
         IQuestionsReadDbContext questionsReadDbContext)
     {
         _filesProvider = filesProvider;
-        //_tagsReadDbContext = tagsReadDbContext;
+        _tagsContract = tagsContract;
         _questionsReadDbContext = questionsReadDbContext;
     }
 
@@ -43,10 +45,7 @@ public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuer
 
         var questionTags = questions.SelectMany(q => q.Tags);
 
-        //var tags = await _tagsReadDbContext.ReadTags
-            //.Where(t => questionTags.Contains(t.Id))
-            //.Select(t => t.Name)
-            //.ToListAsync(cancellationToken);
+        var tags = await _tagsContract.GetByIds(new GetByIdsDto([.. questionTags]), cancellationToken);
 
         var questionsDto = questions.Select(q =>
             new QuestionDto(
@@ -56,7 +55,7 @@ public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuer
                 q.UserId,
                 (q.AttachmentId is not null ? filesDict[q.AttachmentId.Value] : null)!,
                 q.Solution?.Id,
-                [], //tags
+                tags.Select(t => t.Name),
                 q.Status.ToRussianString()));
 
         return new QuestionResponse(questionsDto, count);

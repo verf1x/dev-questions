@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using DevQuestions.Contracts.Questions.Dtos;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Questions.Application.Failures;
+using Questions.Contracts.Dtos;
 using Questions.Domain;
 using Shared;
 using Shared.Abstractions;
