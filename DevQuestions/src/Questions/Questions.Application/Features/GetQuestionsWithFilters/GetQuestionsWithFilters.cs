@@ -12,16 +12,15 @@ namespace Questions.Application.Features.GetQuestionsWithFilters;
 public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuery, QuestionResponse>
 {
     private readonly IFilesProvider _filesProvider;
-    private readonly ITagsContract _tagsContract;
+    // private readonly ITagsContract _tagsContract;
     private readonly IQuestionsReadDbContext _questionsReadDbContext;
 
     public GetQuestionsWithFilters(
         IFilesProvider filesProvider,
-        ITagsContract tagsContract,
         IQuestionsReadDbContext questionsReadDbContext)
     {
         _filesProvider = filesProvider;
-        _tagsContract = tagsContract;
+        // _tagsContract = tagsContract;
         _questionsReadDbContext = questionsReadDbContext;
     }
 
@@ -45,7 +44,7 @@ public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuer
 
         var questionTags = questions.SelectMany(q => q.Tags);
 
-        var tags = await _tagsContract.GetByIds(new GetByIdsDto([.. questionTags]), cancellationToken);
+        // var tags = await _tagsContract.GetByIds(new GetByIdsDto([.. questionTags]), cancellationToken);
 
         var questionsDto = questions.Select(q =>
             new QuestionDto(
@@ -55,7 +54,8 @@ public class GetQuestionsWithFilters : IQueryHandler<GetQuestionsWithFiltersQuer
                 q.UserId,
                 (q.AttachmentId is not null ? filesDict[q.AttachmentId.Value] : null)!,
                 q.Solution?.Id,
-                tags.Select(t => t.Name),
+                // tags.Select(t => t.Name),
+                [],
                 q.Status.ToRussianString()));
 
         return new QuestionResponse(questionsDto, count);

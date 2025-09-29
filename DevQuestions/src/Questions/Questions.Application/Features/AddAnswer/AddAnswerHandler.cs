@@ -13,18 +13,18 @@ namespace Questions.Application.Features.AddAnswer;
 public class AddAnswerHandler : ICommandHandler<AddAnswerCommand, Guid>
 {
     private readonly IValidator<AddAnswerDto> _validator;
-    private readonly IUnitOfWork _unitOfWork;
+    // private readonly IUnitOfWork _unitOfWork;
     private readonly IQuestionsRepository _questionsRepository;
     private readonly ILogger<AddAnswerHandler> _logger;
 
     public AddAnswerHandler(
         IValidator<AddAnswerDto> validator,
-        IUnitOfWork unitOfWork,
+        // IUnitOfWork unitOfWork,
         IQuestionsRepository questionsRepository,
         ILogger<AddAnswerHandler> logger)
     {
         _validator = validator;
-        _unitOfWork = unitOfWork;
+        // _unitOfWork = unitOfWork;
         _questionsRepository = questionsRepository;
         _logger = logger;
     }
@@ -37,7 +37,7 @@ public class AddAnswerHandler : ICommandHandler<AddAnswerCommand, Guid>
         if (!validationResult.IsValid)
             return validationResult.ToErrors();
 
-        var transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        // var transaction = await _unitOfWork.BeginTransactionAsync(cancellationToken);
 
         var questionResult = await _questionsRepository.GetByIdAsync(command.QuestionId, cancellationToken);
         if (questionResult.IsFailure)
@@ -50,7 +50,7 @@ public class AddAnswerHandler : ICommandHandler<AddAnswerCommand, Guid>
 
         await _questionsRepository.SaveAsync(question, cancellationToken);
 
-        transaction.Commit();
+        // transaction.Commit();
 
         _logger.LogInformation(
             "Answer with ID {answerId} added to question {questionId}",
