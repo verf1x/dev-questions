@@ -1,3 +1,4 @@
+using Shared.Abstractions;
 using Tags.Contracts;
 using Tags.Contracts.Dtos;
 using Tags.Database;
