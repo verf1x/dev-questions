@@ -46,11 +46,13 @@ public class QuestionsSqlRepository : IQuestionsRepository
     public async Task<Guid> DeleteAsync(Guid questionId, CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
-    public async Task<Result<Question, ErrorsList>> GetByIdAsync(Guid questionId,
+    public async Task<Result<Question, ErrorsList>> GetByIdAsync(
+        Guid questionId,
         CancellationToken cancellationToken = default)
         => throw new NotImplementedException();
 
-    public Task<(IReadOnlyList<Question> questions, long count)> GetWithFiltersAsync(GetQuestionsWithFiltersQuery query,
+    public Task<(IReadOnlyList<Question> questions, long count)> GetWithFiltersAsync(
+        GetQuestionsWithFiltersQuery query,
         CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
     public async Task<int> GetOpenedUserQuestionsCountAsync(Guid userId, CancellationToken cancellationToken = default)

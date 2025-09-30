@@ -4,6 +4,10 @@ namespace Shared.Abstractions;
 
 public interface ICommand;
 
+public interface IValidation : ICommand;
+
+public interface ILogging : ICommand;
+
 public interface ICommandHandler<in TCommand, TResponse>
     where TCommand : ICommand
 {

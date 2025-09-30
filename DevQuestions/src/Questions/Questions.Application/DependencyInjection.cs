@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Questions.Application.Decorators;
 using Shared.Abstractions;
 
 namespace Questions.Application;
@@ -24,6 +25,9 @@ public static class DependencyInjection
                 typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
+
+        services.TryDecorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator<,>));
+        services.TryDecorate(typeof(ICommandHandler<,>), typeof(LoggingDecorator<,>));
 
         return services;
     }

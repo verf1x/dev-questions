@@ -1,17 +1,16 @@
 ﻿using FluentValidation;
-using Questions.Contracts.Dtos;
 
 namespace Questions.Application.Features.AddAnswer;
 
-public class AddAnswerValidator : AbstractValidator<AddAnswerDto>
+public class AddAnswerValidator : AbstractValidator<AddAnswerCommand>
 {
     public AddAnswerValidator()
     {
-        RuleFor(x => x.Text)
+        RuleFor(x => x.AddAnswerDto.Text)
             .NotEmpty().WithMessage("Text is required.")
             .MaximumLength(5000).WithMessage("Text must not exceed 5000 characters.");
 
-        RuleFor(x => x.UserId)
+        RuleFor(x => x.AddAnswerDto.UserId)
             .NotEqual(Guid.Empty).WithMessage("UserId is required.");
     }
 }

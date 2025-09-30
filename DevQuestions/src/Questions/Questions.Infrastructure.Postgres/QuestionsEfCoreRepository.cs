@@ -55,8 +55,10 @@ public class QuestionsEfCoreRepository : IQuestionsRepository
     public Task<(IReadOnlyList<Question> questions, long count)> GetWithFiltersAsync(
         GetQuestionsWithFiltersQuery query,
         CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+        => Task.FromResult((
+            Array.Empty<Question>() as IReadOnlyList<Question>,
+            0L));
 
     public Task<int> GetOpenedUserQuestionsCountAsync(Guid userId, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+        => Task.FromResult(0);
 }
