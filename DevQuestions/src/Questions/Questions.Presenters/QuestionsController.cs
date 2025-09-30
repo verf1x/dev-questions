@@ -2,9 +2,7 @@ using Framework.ResponseExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Questions.Application.Features.AddAnswer;
 using Questions.Application.Features.Create;
-using Questions.Application.Features.GetQuestionsWithFilters;
 using Questions.Contracts.Dtos;
-using Questions.Contracts.Responses;
 using Shared.Abstractions;
 
 namespace Questions.Presenters;
@@ -25,17 +23,17 @@ public class QuestionsController : ControllerBase
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAsync(
-        [FromServices] IQueryHandler<GetQuestionsWithFiltersQuery, QuestionResponse> handler,
-        [FromQuery] GetQuestionsDto request,
-        CancellationToken cancellationToken = default)
-    {
-        var query = new GetQuestionsWithFiltersQuery(request);
+    // [HttpGet]
+    // public async Task<IActionResult> GetAsync(
+    //     [FromServices] ISender sender,
+    //     [FromQuery] GetQuestionsDto request,
+    //     CancellationToken cancellationToken = default)
+    // {
+    //     var query = new GetQuestionsWithFiltersQuery(request);
 
-        var result = await handler.HandleAsync(query, cancellationToken);
-        return Ok(result);
-    }
+    //     var result = await sender.Send(query, cancellationToken);
+    //     return Ok(result);
+    // }
 
     [HttpGet("{questionId:guid}")]
     public async Task<IActionResult> GetByIdAsync(
